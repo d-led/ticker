@@ -4,7 +4,7 @@ using namespace concurrency;
 
 class FrequencyMeter
 {
-    std::mt19937 gen;
+	std::mt19937 gen;
 	std::uniform_int_distribution<int> dis;
 public:
 	FrequencyMeter() :
@@ -22,10 +22,10 @@ public:
 class active_ticker
 {
 	typedef std::function<void()> tick;
-		tick tick_once;
-		cancellation_token_source cts;
-		cancellation_token token;
-		task<void> t;
+	tick tick_once;
+	cancellation_token_source cts;
+	cancellation_token token;
+	task<void> t;
 public:
 	active_ticker(tick fun):
 		tick_once(fun),
@@ -71,12 +71,12 @@ int main(int argc, char* argv[])
 	ticker.start(500);
 
 
-    // Wait for one second and then cancel the task.
-    wait(2000);
+	// Wait for one second and then cancel the task.
+	wait(2000);
 
 	std::cout << "Canceling measurement ..." << std::endl;
-    measure.stop();
-	
+	measure.stop();
+
 	wait(2000);
 
 	ticker.stop();
@@ -87,7 +87,7 @@ int main(int argc, char* argv[])
 
 	measure.stop();
 
-    std::cout << "Done" << std::endl;
+	std::cout << "Done" << std::endl;
 
 	return 0;
 }

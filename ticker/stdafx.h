@@ -13,7 +13,6 @@
 
 #include <ppl.h>
 #include <ppltasks.h>
-#include <atomic>
 
 #include <iostream>
 #include <string>

@@ -70,8 +70,6 @@ int main(int argc, char* argv[])
 	active_ticker ticker([]{std::cout<<"tick"<<std::endl;});
 	ticker.start(500);
 
-
-	// Wait for one second and then cancel the task.
 	wait(2000);
 
 	std::cout << "Canceling measurement ..." << std::endl;

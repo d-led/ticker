@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
 {
 	FrequencyMeter FM;
 
-	active_ticker measure=([&]{std::cout<<FM.Hz()<<std::endl;});
+	active_ticker measure([&]{std::cout<<FM.Hz()<<std::endl;});
 	measure.start(250);
 
 	active_ticker ticker([]{std::cout<<"tick"<<std::endl;});

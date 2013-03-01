@@ -6,6 +6,7 @@ class FrequencyMeter
 {
 	std::mt19937 gen;
 	std::uniform_int_distribution<int> dis;
+	mutable std::mutex m;
 public:
 	FrequencyMeter() :
 		dis(0,3),
@@ -14,7 +15,7 @@ public:
 
 	int Hz()
 	{
-		auto r=rand();
+		std::lock_guard<std::mutex> lock(m);
 		return 60+dis(gen);
 	}
 };

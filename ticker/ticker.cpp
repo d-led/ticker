@@ -4,7 +4,7 @@ using namespace concurrency;
 
 class FrequencyMeter
 {
-	std::mt19937 gen;
+	mutable std::mt19937 gen;
 	std::uniform_int_distribution<int> dis;
 	mutable std::mutex m;
 public:
@@ -13,7 +13,7 @@ public:
 		gen(std::random_device()())
 	{}
 
-	int Hz()
+	int Hz() const
 	{
 		std::lock_guard<std::mutex> lock(m);
 		return 60+dis(gen);

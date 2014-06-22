@@ -36,28 +36,35 @@ namespace {
 	}
 
 	void rxcpp_example() {
+		FrequencyMeter FM;
 		auto scheduler = std::make_shared<rxcpp::EventLoopScheduler>();
 		auto measure = rxcpp::Interval(std::chrono::milliseconds(250),scheduler);
-		rxcpp::from(measure)
-			.take(10)
-			.subscribe([](int val) {
-			std::cout << "measure " << val << std::endl;
+
+		auto measure_subscription = rxcpp::from(measure)
+			.subscribe([&FM](int val) {
+			std::cout << FM.Hz() << std::endl;
 		});
 		
-		auto ticker = rxcpp::Interval(std::chrono::seconds(1), scheduler);
+		auto ticker = rxcpp::Interval(std::chrono::milliseconds(500), scheduler);
 		rxcpp::from(ticker)
-			.take(5)
+			.take(10)
 			.subscribe([](int val) {
 			std::cout << "tick " << val << std::endl;
 		});
-		concurrency::wait(10000);
+
+
+		concurrency::wait(2000);
+		std::cout << "Canceling measurement ..." << std::endl;
+		measure_subscription.Dispose(); // cancel measurement
+
+		concurrency::wait(6000); // wait for ticker to finish
 	}
 }
 
 int main(int argc, char* argv[])
 {
 	std::cout << "--- ppl ---" << std::endl;
-	//ppl_example();
+	ppl_example();
 
 	std::cout << "--- rxcpp ---" << std::endl;
 	rxcpp_example();

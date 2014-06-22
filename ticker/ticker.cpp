@@ -3,6 +3,7 @@
 #include "frequency_meter.h"
 #include "active_ticker.h"
 #include <cpprx/rx.hpp>
+#include <chrono>
 
 namespace {
 	void ppl_example() {
@@ -35,14 +36,20 @@ namespace {
 	}
 
 	void rxcpp_example() {
-		auto ticker = rxcpp::Range<int>(1);
+		auto scheduler = std::make_shared<rxcpp::EventLoopScheduler>();
+		auto ticker = rxcpp::Interval(std::chrono::milliseconds(250),scheduler);
+		rxcpp::from(ticker)
+			.take(10)
+			.for_each([](int val) {
+			std::cout << "tick " <<val<< std::endl;
+		});
 	}
 }
 
 int main(int argc, char* argv[])
 {
 	std::cout << "--- ppl ---" << std::endl;
-	ppl_example();
+	//ppl_example();
 
 	std::cout << "--- rxcpp ---" << std::endl;
 	rxcpp_example();

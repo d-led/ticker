@@ -2,6 +2,7 @@
 
 #include "frequency_meter.h"
 #include "active_ticker.h"
+#include <cpprx/rx.hpp>
 
 namespace {
 	void ppl_example() {
@@ -32,11 +33,18 @@ namespace {
 
 		std::cout << "Done" << std::endl;
 	}
+
+	void rxcpp_example() {
+		auto ticker = rxcpp::Range<int>(1);
+	}
 }
 
 int main(int argc, char* argv[])
 {
 	std::cout << "--- ppl ---" << std::endl;
 	ppl_example();
+
+	std::cout << "--- rxcpp ---" << std::endl;
+	rxcpp_example();
 	return 0;
 }

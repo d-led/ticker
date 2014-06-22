@@ -73,7 +73,7 @@ namespace {
 int main(int argc, char* argv[])
 {
 	std::cout << "--- ppl ---" << std::endl;
-	//ppl_example();
+	ppl_example();
 
 	std::cout << "--- rxcpp ---" << std::endl;
 	rxcpp_example();

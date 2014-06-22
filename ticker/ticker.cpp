@@ -37,12 +37,20 @@ namespace {
 
 	void rxcpp_example() {
 		auto scheduler = std::make_shared<rxcpp::EventLoopScheduler>();
-		auto ticker = rxcpp::Interval(std::chrono::milliseconds(250),scheduler);
-		rxcpp::from(ticker)
+		auto measure = rxcpp::Interval(std::chrono::milliseconds(250),scheduler);
+		rxcpp::from(measure)
 			.take(10)
-			.for_each([](int val) {
-			std::cout << "tick " <<val<< std::endl;
+			.subscribe([](int val) {
+			std::cout << "measure " << val << std::endl;
 		});
+		
+		auto ticker = rxcpp::Interval(std::chrono::seconds(1), scheduler);
+		rxcpp::from(ticker)
+			.take(5)
+			.subscribe([](int val) {
+			std::cout << "tick " << val << std::endl;
+		});
+		concurrency::wait(10000);
 	}
 }
 

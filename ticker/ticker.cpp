@@ -39,32 +39,41 @@ namespace {
 		FrequencyMeter FM;
 		auto scheduler = std::make_shared<rxcpp::EventLoopScheduler>();
 		auto measure = rxcpp::Interval(std::chrono::milliseconds(250),scheduler);
+		auto sleep = [&scheduler](int milliseconds) {
+			//rxcpp::from(rxcpp::Interval(std::chrono::milliseconds(milliseconds), scheduler))
+			//	.take(1)
+			//	.for_each([](int){});
+
+			//concurrency::wait(milliseconds);
+
+			std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
+		};
 
 		auto measure_subscription = rxcpp::from(measure)
 			.subscribe([&FM](int val) {
-			std::cout << FM.Hz() << std::endl;
-		});
+				std::cout << FM.Hz() << std::endl;
+			});
 		
 		auto ticker = rxcpp::Interval(std::chrono::milliseconds(500), scheduler);
 		rxcpp::from(ticker)
 			.take(10)
 			.subscribe([](int val) {
-			std::cout << "tick " << val << std::endl;
-		});
+				std::cout << "tick " << val << std::endl;
+			});
 
 
-		concurrency::wait(2000);
+		sleep(2000);
 		std::cout << "Canceling measurement ..." << std::endl;
 		measure_subscription.Dispose(); // cancel measurement
 
-		concurrency::wait(6000); // wait for ticker to finish
+		sleep(6000); // wait for ticker to finish
 	}
 }
 
 int main(int argc, char* argv[])
 {
 	std::cout << "--- ppl ---" << std::endl;
-	ppl_example();
+	//ppl_example();
 
 	std::cout << "--- rxcpp ---" << std::endl;
 	rxcpp_example();

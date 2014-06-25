@@ -35,6 +35,10 @@ namespace {
 		std::cout << "Done" << std::endl;
 	}
 
+	static void sleep (int milliseconds) {
+		std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
+	}
+
 	void rxcpp_example() {
 		FrequencyMeter FM;
 
@@ -44,17 +48,21 @@ namespace {
         auto scheduler = rxcpp::schedulers::make_same_worker(rxcpp::schedulers::make_event_loop().create_worker());
 		auto coordination = rxcpp::identity_one_worker(scheduler);
 
-        auto measure = rxcpp::observable<>::interval(scheduler.now() + std::chrono::milliseconds(250), std::chrono::milliseconds(250), coordination);
-		auto sleep = [&scheduler](int milliseconds) {
-			std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
-		};
+        auto measure = rxcpp::observable<>::interval(
+			scheduler.now() + std::chrono::milliseconds(250),
+			std::chrono::milliseconds(250),
+			coordination);
 
 		auto measure_subscription = measure
 			.subscribe([&FM](int val) {
 				std::cout << FM.Hz() << std::endl;
 			});
 		
-		auto ticker = rxcpp::observable<>::interval(scheduler.now() + std::chrono::milliseconds(500), std::chrono::milliseconds(500), coordination);
+		auto ticker = rxcpp::observable<>::interval(
+			scheduler.now() + std::chrono::milliseconds(500),
+			std::chrono::milliseconds(500),
+			coordination);
+
 		ticker
 			.take(10)
 			.subscribe([](int val) {

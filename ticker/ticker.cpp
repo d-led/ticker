@@ -2,7 +2,7 @@
 
 #include "frequency_meter.h"
 #include "active_ticker.h"
-#include <cpprx/rx.hpp>
+#include <rxcpp/rx.hpp>
 #include <chrono>
 
 namespace {
@@ -37,36 +37,43 @@ namespace {
 
 	void rxcpp_example() {
 		FrequencyMeter FM;
-		auto scheduler = std::make_shared<rxcpp::EventLoopScheduler>();
-		auto measure = rxcpp::Interval(std::chrono::milliseconds(250),scheduler);
+
+        std::atomic<long> pending(2);
+
+        // schedule everything on the same event loop thread.
+        auto scheduler = rxcpp::schedulers::make_same_worker(rxcpp::schedulers::make_event_loop().create_worker());
+		auto coordination = rxcpp::identity_one_worker(scheduler);
+
+        auto measure = rxcpp::observable<>::interval(scheduler.now() + std::chrono::milliseconds(250), std::chrono::milliseconds(250), coordination);
 		auto sleep = [&scheduler](int milliseconds) {
-			//rxcpp::from(rxcpp::Interval(std::chrono::milliseconds(milliseconds), scheduler))
-			//	.take(1)
-			//	.for_each([](int){});
-
-			//concurrency::wait(milliseconds);
-
 			std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
 		};
 
-		auto measure_subscription = rxcpp::from(measure)
+		auto measure_subscription = measure
 			.subscribe([&FM](int val) {
 				std::cout << FM.Hz() << std::endl;
 			});
 		
-		auto ticker = rxcpp::Interval(std::chrono::milliseconds(500), scheduler);
-		rxcpp::from(ticker)
+		auto ticker = rxcpp::observable<>::interval(scheduler.now() + std::chrono::milliseconds(500), std::chrono::milliseconds(500), coordination);
+		ticker
 			.take(10)
 			.subscribe([](int val) {
 				std::cout << "tick " << val << std::endl;
-			});
+            },[&](){
+                --pending; // take completed the ticker
+            });
 
+        // schedule the cout on the same worker to keep it from merging with the other cout calls.
+        scheduler.create_worker().schedule(scheduler.now() + std::chrono::seconds(2), 
+            [&](const rxcpp::schedulers::schedulable&) {
+		        std::cout << "Canceling measurement ..." << std::endl;
+		        measure_subscription.unsubscribe(); // cancel measurement
+                --pending; // signal measurement canceled
+            });
 
-		sleep(2000);
-		std::cout << "Canceling measurement ..." << std::endl;
-		measure_subscription.Dispose(); // cancel measurement
-
-		sleep(6000); // wait for ticker to finish
+        while (pending > 0) {
+		    sleep(1000); // wait for ticker and measure to finish
+        }
 	}
 }
 

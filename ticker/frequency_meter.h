@@ -6,7 +6,7 @@
 class FrequencyMeter
 {
 	mutable std::mt19937 gen;
-	std::uniform_int_distribution<int> dis;
+	mutable std::uniform_int_distribution<int> dis;
 	mutable std::mutex m;
 public:
 	FrequencyMeter() :

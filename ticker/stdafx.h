@@ -5,18 +5,10 @@
 
 #pragma once
 
-#include "targetver.h"
-
-#include <stdio.h>
-#include <tchar.h>
-
-
-#include <ppl.h>
-#include <ppltasks.h>
-
 #include <mutex>
 #include <iostream>
 #include <string>
 #include <random>
+#include <chrono>
 
 // TODO: reference additional headers your program requires here

@@ -5,6 +5,7 @@
 
 #include <ppl.h>
 #include <ppltasks.h>
+#include <thread>
 
 namespace {
 	void ppl_example() {

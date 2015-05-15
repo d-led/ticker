@@ -50,7 +50,7 @@ namespace {
                 --pending; // signal measurement canceled
             });
 
-        while (pending > 0) {
+        while (pending) {
             sleep(1000); // wait for ticker and measure to finish
         }
     }

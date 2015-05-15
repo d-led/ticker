@@ -20,13 +20,17 @@ namespace {
         auto coordination = rxcpp::identity_one_worker(scheduler);
 
         auto measure = rxcpp::observable<>::interval(
-            scheduler.now() + std::chrono::milliseconds(250),
-            std::chrono::milliseconds(250),
-            coordination);
+                // when to start
+                scheduler.now() + std::chrono::milliseconds(250),
+                // measurement frequency
+                std::chrono::milliseconds(250),
+                coordination)
+            // take Hz values instead of a counter
+            .map([&FM](int) { return FM.Hz(); });
 
         auto measure_subscription = measure
-            .subscribe([&FM](int val) {
-                std::cout << FM.Hz() << std::endl;
+            .subscribe([](int val) {
+                std::cout << val << std::endl;
             });
         
         auto ticker = rxcpp::observable<>::interval(

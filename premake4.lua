@@ -13,15 +13,15 @@ if OS == 'linux' then
 end
 
 make_console_app( 'rxcpp_example', './ticker/rxcpp_example.cpp' )
-make_cpp11()
+use_standard 'c++0x'
 run_target_after_build()
 
 make_console_app( 'rxcpp_test', './ticker/rxcpp_test.cpp')
 includedirs 'Catch/single_include'
-make_cpp11()
+use_standard 'c++0x'
 run_target_after_build()
 
 if OS == 'windows' then
 	make_console_app( 'ppl_example', './ticker/ppl_example.cpp' )
-	make_cpp11()
+	use_standard 'c++0x'
 end

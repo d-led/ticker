@@ -1,11 +1,5 @@
 language: cpp
 
-os:
-  - linux
-
-compiler:
-  - gcc
-
 install:
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
   - sudo apt-get update -qq
@@ -15,4 +9,4 @@ before_script:
   - export CXX="g++-4.9"
 
 script:
-  - make -C Build/linux/gmake config=release64
+  - make -C Build/linux/gmake config=release_x64

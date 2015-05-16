@@ -1,7 +1,4 @@
-_G.package.path=_G.package.path..[[;./?.lua;./?/?.lua]]
-assert( require 'premake.quickstart' )
-
-local OS=os.get()
+include 'premake'
 
 make_solution 'ticker'
 
@@ -13,7 +10,12 @@ make_console_app( 'rxcpp_example', './ticker/rxcpp_example.cpp' )
 make_cpp11()
 run_target_after_build()
 
-if OS == 'windows' then
+make_console_app( 'rxcpp_test', './ticker/rxcpp_test.cpp')
+includedirs 'Catch/single_include'
+make_cpp11()
+run_target_after_build()
+
+if os.get() == 'windows' then
 	make_console_app( 'ppl_example', './ticker/ppl_example.cpp' )
 	make_cpp11()
 end

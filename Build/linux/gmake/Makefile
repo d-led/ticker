@@ -2,11 +2,11 @@
 # Type "make help" for usage help
 
 ifndef config
-  config=debug
+  config=debug32
 endif
 export config
 
-PROJECTS := rxcpp_example
+PROJECTS := rxcpp_example rxcpp_test
 
 .PHONY: all clean help $(PROJECTS)
 
@@ -16,19 +16,27 @@ rxcpp_example:
 	@echo "==== Building rxcpp_example ($(config)) ===="
 	@${MAKE} --no-print-directory -C . -f rxcpp_example.make
 
+rxcpp_test: 
+	@echo "==== Building rxcpp_test ($(config)) ===="
+	@${MAKE} --no-print-directory -C . -f rxcpp_test.make
+
 clean:
 	@${MAKE} --no-print-directory -C . -f rxcpp_example.make clean
+	@${MAKE} --no-print-directory -C . -f rxcpp_test.make clean
 
 help:
 	@echo "Usage: make [config=name] [target]"
 	@echo ""
 	@echo "CONFIGURATIONS:"
-	@echo "   debug"
-	@echo "   release"
+	@echo "   debug32"
+	@echo "   release32"
+	@echo "   debug64"
+	@echo "   release64"
 	@echo ""
 	@echo "TARGETS:"
 	@echo "   all (default)"
 	@echo "   clean"
 	@echo "   rxcpp_example"
+	@echo "   rxcpp_test"
 	@echo ""
 	@echo "For more information, see http://industriousone.com/premake/quick-start"

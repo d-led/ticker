@@ -7,3 +7,6 @@
 [submodule "Catch"]
 	path = Catch
 	url = https://github.com/philsquared/Catch.git
+[submodule "casablanca"]
+	path = casablanca
+	url = https://github.com/antmd/casablanca.git

@@ -30,7 +30,7 @@ namespace {
 
 		ticker.stop();
 
-		std::cout << "Restarting measurement ..." << std::endl;
+		std::cout << "Stopping ticker, restarting measurement ..." << std::endl;
 		measure.start(250);
 		wait(2000);
 

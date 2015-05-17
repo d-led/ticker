@@ -51,6 +51,7 @@ end
 ----------------
 make_console_app( 'ppl_example', './ticker/ppl_example.cpp' )
 use_standard 'c++0x'
+run_target_after_build()
 
 includedirs {
 	'./casablanca/Release/include',

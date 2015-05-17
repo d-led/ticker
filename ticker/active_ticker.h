@@ -55,5 +55,10 @@ public:
     void stop()
     {
         cts.cancel();
+
+        /*pplx workaround*/
+#ifndef _MSC_VER
+    	running = false;
+#endif
     }
 };

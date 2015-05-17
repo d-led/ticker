@@ -7,7 +7,7 @@
 
 #include <thread>
 
-//cancellation doesn't work on linux yet
+//cancellation isn't supported in pplx yet
 
 namespace {
 	void ppl_example() {

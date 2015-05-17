@@ -10,7 +10,9 @@ namespace pplx = concurrency;
 #include <unistd.h>
 namespace pplx {
 	inline static void wait (int milliseconds) {
-        usleep(milliseconds*1000);
+        pplx::create_task([milliseconds]{
+        	usleep(milliseconds*1000);
+        }).wait();
     }
 }
 #endif

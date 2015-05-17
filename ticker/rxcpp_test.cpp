@@ -9,8 +9,9 @@
 SCENARIO("showing off the test scheduler") {
 
     GIVEN("a test scheduler") {
-        auto tsc = std::make_shared<rxcpp::schedulers::detail::test_type>();
-        auto sc = rxcpp::schedulers::test(tsc);
+        auto sc = rxcpp::schedulers::make_test();
+        auto worker = sc.create_worker();
+        auto test = rxcpp::identity_same_worker(worker);
 
         int count = 0;
 
@@ -18,7 +19,7 @@ SCENARIO("showing off the test scheduler") {
             auto coordination = rxcpp::identity_one_worker(sc);
             auto seq = rxcpp::observable<>::interval(
                 std::chrono::milliseconds(1),
-                coordination // on the test scheduler
+                test // on the test scheduler
             ).filter([](int i) { return i % 2; });
 
             ;
@@ -28,19 +29,18 @@ SCENARIO("showing off the test scheduler") {
             });
 
             THEN("the sequence is not run at first") {
-                std::this_thread::sleep_for(std::chrono::milliseconds(2));
+                worker.sleep(2 /* ms */);
 
                 CHECK(count == 0);
 
                 AND_WHEN("the test scheduler is advanced manually") {
-                    auto worker = tsc->create_test_type_worker_interface();
 
                     THEN("the sequence is run as expected") {
-                        worker->advance_by(10 /* ms */);
+                        worker.advance_by(8 /* ms */);
                         CHECK(count == 5);
 
                         AND_THEN("the scheduler can be advanced again") {
-                            worker->advance_by(10);
+                            worker.advance_by(10);
                             CHECK(count == 10);
                         }
                     }

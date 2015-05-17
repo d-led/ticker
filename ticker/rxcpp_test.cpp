@@ -41,7 +41,7 @@ SCENARIO("showing off the test scheduler") {
 
                         AND_THEN("the scheduler can be advanced again") {
                             worker->advance_by(10);
-                            //CHECK(count == 10); 5 == 10!
+                            CHECK(count == 10);
                         }
                     }
                 }

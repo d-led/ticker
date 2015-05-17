@@ -3,13 +3,15 @@
 #include "frequency_meter.h"
 #include "active_ticker.h"
 
-#include <ppl.h>
-#include <ppltasks.h>
+#include "ppl_include.h"
+
 #include <thread>
+
+//cancellation doesn't work on linux yet
 
 namespace {
 	void ppl_example() {
-		using concurrency::wait;
+		using pplx::wait;
 
 		FrequencyMeter FM;
 

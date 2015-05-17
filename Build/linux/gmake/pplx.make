@@ -13,10 +13,10 @@ endif
 ifeq ($(config),debug_x32)
   RESCOMP = windres
   TARGETDIR = ../../../bin/linux/gmake/x32/Debug
-  TARGET = $(TARGETDIR)/rxcpp_test
-  OBJDIR = ../../../obj/linux/gmake/x32/Debug/rxcpp_test
+  TARGET = $(TARGETDIR)/libpplx.a
+  OBJDIR = ../../../obj/linux/gmake/x32/Debug/pplx
   DEFINES += -DDEBUG -D_DEBUG
-  INCLUDES += -I../../../RxCpp/Rx/v2/src -I../../../Catch/single_include -I../../../casablanca/Release/include -I../../../casablanca/Release/src/pch
+  INCLUDES += -I../../../RxCpp/Rx/v2/src -I../../../casablanca/Release/include -I../../../casablanca/Release/src/pch
   FORCE_INCLUDE +=
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -m32 -std=c++0x
@@ -25,14 +25,12 @@ ifeq ($(config),debug_x32)
   LIBS += -lpthread
   LDDEPS +=
   ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib32 -m32
-  LINKCMD = $(CXX) -o $(TARGET) $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
+  LINKCMD = $(AR) -rcs $(TARGET) $(OBJECTS)
   define PREBUILDCMDS
   endef
   define PRELINKCMDS
   endef
   define POSTBUILDCMDS
-	@echo Running postbuild commands
-	$(TARGET)
   endef
 all: $(TARGETDIR) $(OBJDIR) prebuild prelink $(TARGET)
 	@:
@@ -42,10 +40,10 @@ endif
 ifeq ($(config),debug_x64)
   RESCOMP = windres
   TARGETDIR = ../../../bin/linux/gmake/x64/Debug
-  TARGET = $(TARGETDIR)/rxcpp_test
-  OBJDIR = ../../../obj/linux/gmake/x64/Debug/rxcpp_test
+  TARGET = $(TARGETDIR)/libpplx.a
+  OBJDIR = ../../../obj/linux/gmake/x64/Debug/pplx
   DEFINES += -DDEBUG -D_DEBUG
-  INCLUDES += -I../../../RxCpp/Rx/v2/src -I../../../Catch/single_include -I../../../casablanca/Release/include -I../../../casablanca/Release/src/pch
+  INCLUDES += -I../../../RxCpp/Rx/v2/src -I../../../casablanca/Release/include -I../../../casablanca/Release/src/pch
   FORCE_INCLUDE +=
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -m64 -std=c++0x
@@ -54,14 +52,12 @@ ifeq ($(config),debug_x64)
   LIBS += -lpthread
   LDDEPS +=
   ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -m64
-  LINKCMD = $(CXX) -o $(TARGET) $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
+  LINKCMD = $(AR) -rcs $(TARGET) $(OBJECTS)
   define PREBUILDCMDS
   endef
   define PRELINKCMDS
   endef
   define POSTBUILDCMDS
-	@echo Running postbuild commands
-	$(TARGET)
   endef
 all: $(TARGETDIR) $(OBJDIR) prebuild prelink $(TARGET)
 	@:
@@ -71,10 +67,10 @@ endif
 ifeq ($(config),release_x32)
   RESCOMP = windres
   TARGETDIR = ../../../bin/linux/gmake/x32/Release
-  TARGET = $(TARGETDIR)/rxcpp_test
-  OBJDIR = ../../../obj/linux/gmake/x32/Release/rxcpp_test
+  TARGET = $(TARGETDIR)/libpplx.a
+  OBJDIR = ../../../obj/linux/gmake/x32/Release/pplx
   DEFINES += -DRELEASE
-  INCLUDES += -I../../../RxCpp/Rx/v2/src -I../../../Catch/single_include -I../../../casablanca/Release/include -I../../../casablanca/Release/src/pch
+  INCLUDES += -I../../../RxCpp/Rx/v2/src -I../../../casablanca/Release/include -I../../../casablanca/Release/src/pch
   FORCE_INCLUDE +=
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m32 -O2 -std=c++0x
@@ -83,14 +79,12 @@ ifeq ($(config),release_x32)
   LIBS += -lpthread
   LDDEPS +=
   ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib32 -s -m32
-  LINKCMD = $(CXX) -o $(TARGET) $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
+  LINKCMD = $(AR) -rcs $(TARGET) $(OBJECTS)
   define PREBUILDCMDS
   endef
   define PRELINKCMDS
   endef
   define POSTBUILDCMDS
-	@echo Running postbuild commands
-	$(TARGET)
   endef
 all: $(TARGETDIR) $(OBJDIR) prebuild prelink $(TARGET)
 	@:
@@ -100,10 +94,10 @@ endif
 ifeq ($(config),release_x64)
   RESCOMP = windres
   TARGETDIR = ../../../bin/linux/gmake/x64/Release
-  TARGET = $(TARGETDIR)/rxcpp_test
-  OBJDIR = ../../../obj/linux/gmake/x64/Release/rxcpp_test
+  TARGET = $(TARGETDIR)/libpplx.a
+  OBJDIR = ../../../obj/linux/gmake/x64/Release/pplx
   DEFINES += -DRELEASE
-  INCLUDES += -I../../../RxCpp/Rx/v2/src -I../../../Catch/single_include -I../../../casablanca/Release/include -I../../../casablanca/Release/src/pch
+  INCLUDES += -I../../../RxCpp/Rx/v2/src -I../../../casablanca/Release/include -I../../../casablanca/Release/src/pch
   FORCE_INCLUDE +=
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -O2 -std=c++0x
@@ -112,14 +106,12 @@ ifeq ($(config),release_x64)
   LIBS += -lpthread
   LDDEPS +=
   ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -s -m64
-  LINKCMD = $(CXX) -o $(TARGET) $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
+  LINKCMD = $(AR) -rcs $(TARGET) $(OBJECTS)
   define PREBUILDCMDS
   endef
   define PRELINKCMDS
   endef
   define POSTBUILDCMDS
-	@echo Running postbuild commands
-	$(TARGET)
   endef
 all: $(TARGETDIR) $(OBJDIR) prebuild prelink $(TARGET)
 	@:
@@ -127,7 +119,9 @@ all: $(TARGETDIR) $(OBJDIR) prebuild prelink $(TARGET)
 endif
 
 OBJECTS := \
-	$(OBJDIR)/rxcpp_test.o \
+	$(OBJDIR)/pplx.o \
+	$(OBJDIR)/pplxlinux.o \
+	$(OBJDIR)/threadpool.o \
 
 RESOURCES := \
 
@@ -142,7 +136,7 @@ ifeq (/bin,$(findstring /bin,$(SHELL)))
 endif
 
 $(TARGET): $(GCH) $(OBJECTS) $(LDDEPS) $(RESOURCES) ${CUSTOMFILES}
-	@echo Linking rxcpp_test
+	@echo Linking pplx
 	$(SILENT) $(LINKCMD)
 	$(POSTBUILDCMDS)
 
@@ -163,7 +157,7 @@ else
 endif
 
 clean:
-	@echo Cleaning rxcpp_test
+	@echo Cleaning pplx
 ifeq (posix,$(SHELLTYPE))
 	$(SILENT) rm -f  $(TARGET)
 	$(SILENT) rm -rf $(OBJDIR)
@@ -185,7 +179,13 @@ $(GCH): $(PCH)
 	$(SILENT) $(CXX) -x c++-header $(ALL_CXXFLAGS) -o "$@" -MF "$(@:%.gch=%.d)" -c "$<"
 endif
 
-$(OBJDIR)/rxcpp_test.o: ../../../ticker/rxcpp_test.cpp
+$(OBJDIR)/pplx.o: ../../../casablanca/Release/src/pplx/pplx.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/pplxlinux.o: ../../../casablanca/Release/src/pplx/pplxlinux.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/threadpool.o: ../../../casablanca/Release/src/pplx/threadpool.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 

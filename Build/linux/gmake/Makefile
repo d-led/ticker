@@ -13,21 +13,29 @@ endif
 ifeq ($(config),debug_x32)
   rxcpp_example_config = debug_x32
   rxcpp_test_config = debug_x32
+  pplx_config = debug_x32
+  ppl_example_config = debug_x32
 endif
 ifeq ($(config),debug_x64)
   rxcpp_example_config = debug_x64
   rxcpp_test_config = debug_x64
+  pplx_config = debug_x64
+  ppl_example_config = debug_x64
 endif
 ifeq ($(config),release_x32)
   rxcpp_example_config = release_x32
   rxcpp_test_config = release_x32
+  pplx_config = release_x32
+  ppl_example_config = release_x32
 endif
 ifeq ($(config),release_x64)
   rxcpp_example_config = release_x64
   rxcpp_test_config = release_x64
+  pplx_config = release_x64
+  ppl_example_config = release_x64
 endif
 
-PROJECTS := rxcpp_example rxcpp_test
+PROJECTS := rxcpp_example rxcpp_test pplx ppl_example
 
 .PHONY: all clean help $(PROJECTS) 
 
@@ -45,9 +53,23 @@ ifneq (,$(rxcpp_test_config))
 	@${MAKE} --no-print-directory -C . -f rxcpp_test.make config=$(rxcpp_test_config)
 endif
 
+pplx:
+ifneq (,$(pplx_config))
+	@echo "==== Building pplx ($(pplx_config)) ===="
+	@${MAKE} --no-print-directory -C . -f pplx.make config=$(pplx_config)
+endif
+
+ppl_example: pplx
+ifneq (,$(ppl_example_config))
+	@echo "==== Building ppl_example ($(ppl_example_config)) ===="
+	@${MAKE} --no-print-directory -C . -f ppl_example.make config=$(ppl_example_config)
+endif
+
 clean:
 	@${MAKE} --no-print-directory -C . -f rxcpp_example.make clean
 	@${MAKE} --no-print-directory -C . -f rxcpp_test.make clean
+	@${MAKE} --no-print-directory -C . -f pplx.make clean
+	@${MAKE} --no-print-directory -C . -f ppl_example.make clean
 
 help:
 	@echo "Usage: make [config=name] [target]"
@@ -63,5 +85,7 @@ help:
 	@echo "   clean"
 	@echo "   rxcpp_example"
 	@echo "   rxcpp_test"
+	@echo "   pplx"
+	@echo "   ppl_example"
 	@echo ""
 	@echo "For more information, see http://industriousone.com/premake/quick-start"

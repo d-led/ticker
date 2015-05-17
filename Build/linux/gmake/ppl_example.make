@@ -13,17 +13,17 @@ endif
 ifeq ($(config),debug_x32)
   RESCOMP = windres
   TARGETDIR = ../../../bin/linux/gmake/x32/Debug
-  TARGET = $(TARGETDIR)/rxcpp_test
-  OBJDIR = ../../../obj/linux/gmake/x32/Debug/rxcpp_test
+  TARGET = $(TARGETDIR)/ppl_example
+  OBJDIR = ../../../obj/linux/gmake/x32/Debug/ppl_example
   DEFINES += -DDEBUG -D_DEBUG
-  INCLUDES += -I../../../RxCpp/Rx/v2/src -I../../../Catch/single_include -I../../../casablanca/Release/include -I../../../casablanca/Release/src/pch
+  INCLUDES += -I../../../RxCpp/Rx/v2/src -I../../../casablanca/Release/include -I../../../casablanca/Release/src/pch
   FORCE_INCLUDE +=
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -m32 -std=c++0x
   ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CFLAGS)
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-  LIBS += -lpthread
-  LDDEPS +=
+  LIBS += ../../../bin/linux/gmake/x32/Debug/libpplx.a -lpthread -lboost_system -lboost_thread
+  LDDEPS += ../../../bin/linux/gmake/x32/Debug/libpplx.a
   ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib32 -m32
   LINKCMD = $(CXX) -o $(TARGET) $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
   define PREBUILDCMDS
@@ -31,8 +31,6 @@ ifeq ($(config),debug_x32)
   define PRELINKCMDS
   endef
   define POSTBUILDCMDS
-	@echo Running postbuild commands
-	$(TARGET)
   endef
 all: $(TARGETDIR) $(OBJDIR) prebuild prelink $(TARGET)
 	@:
@@ -42,17 +40,17 @@ endif
 ifeq ($(config),debug_x64)
   RESCOMP = windres
   TARGETDIR = ../../../bin/linux/gmake/x64/Debug
-  TARGET = $(TARGETDIR)/rxcpp_test
-  OBJDIR = ../../../obj/linux/gmake/x64/Debug/rxcpp_test
+  TARGET = $(TARGETDIR)/ppl_example
+  OBJDIR = ../../../obj/linux/gmake/x64/Debug/ppl_example
   DEFINES += -DDEBUG -D_DEBUG
-  INCLUDES += -I../../../RxCpp/Rx/v2/src -I../../../Catch/single_include -I../../../casablanca/Release/include -I../../../casablanca/Release/src/pch
+  INCLUDES += -I../../../RxCpp/Rx/v2/src -I../../../casablanca/Release/include -I../../../casablanca/Release/src/pch
   FORCE_INCLUDE +=
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -m64 -std=c++0x
   ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CFLAGS)
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-  LIBS += -lpthread
-  LDDEPS +=
+  LIBS += ../../../bin/linux/gmake/x64/Debug/libpplx.a -lpthread -lboost_system -lboost_thread
+  LDDEPS += ../../../bin/linux/gmake/x64/Debug/libpplx.a
   ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -m64
   LINKCMD = $(CXX) -o $(TARGET) $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
   define PREBUILDCMDS
@@ -60,8 +58,6 @@ ifeq ($(config),debug_x64)
   define PRELINKCMDS
   endef
   define POSTBUILDCMDS
-	@echo Running postbuild commands
-	$(TARGET)
   endef
 all: $(TARGETDIR) $(OBJDIR) prebuild prelink $(TARGET)
 	@:
@@ -71,17 +67,17 @@ endif
 ifeq ($(config),release_x32)
   RESCOMP = windres
   TARGETDIR = ../../../bin/linux/gmake/x32/Release
-  TARGET = $(TARGETDIR)/rxcpp_test
-  OBJDIR = ../../../obj/linux/gmake/x32/Release/rxcpp_test
+  TARGET = $(TARGETDIR)/ppl_example
+  OBJDIR = ../../../obj/linux/gmake/x32/Release/ppl_example
   DEFINES += -DRELEASE
-  INCLUDES += -I../../../RxCpp/Rx/v2/src -I../../../Catch/single_include -I../../../casablanca/Release/include -I../../../casablanca/Release/src/pch
+  INCLUDES += -I../../../RxCpp/Rx/v2/src -I../../../casablanca/Release/include -I../../../casablanca/Release/src/pch
   FORCE_INCLUDE +=
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m32 -O2 -std=c++0x
   ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CFLAGS)
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-  LIBS += -lpthread
-  LDDEPS +=
+  LIBS += ../../../bin/linux/gmake/x32/Release/libpplx.a -lpthread -lboost_system -lboost_thread
+  LDDEPS += ../../../bin/linux/gmake/x32/Release/libpplx.a
   ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib32 -s -m32
   LINKCMD = $(CXX) -o $(TARGET) $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
   define PREBUILDCMDS
@@ -89,8 +85,6 @@ ifeq ($(config),release_x32)
   define PRELINKCMDS
   endef
   define POSTBUILDCMDS
-	@echo Running postbuild commands
-	$(TARGET)
   endef
 all: $(TARGETDIR) $(OBJDIR) prebuild prelink $(TARGET)
 	@:
@@ -100,17 +94,17 @@ endif
 ifeq ($(config),release_x64)
   RESCOMP = windres
   TARGETDIR = ../../../bin/linux/gmake/x64/Release
-  TARGET = $(TARGETDIR)/rxcpp_test
-  OBJDIR = ../../../obj/linux/gmake/x64/Release/rxcpp_test
+  TARGET = $(TARGETDIR)/ppl_example
+  OBJDIR = ../../../obj/linux/gmake/x64/Release/ppl_example
   DEFINES += -DRELEASE
-  INCLUDES += -I../../../RxCpp/Rx/v2/src -I../../../Catch/single_include -I../../../casablanca/Release/include -I../../../casablanca/Release/src/pch
+  INCLUDES += -I../../../RxCpp/Rx/v2/src -I../../../casablanca/Release/include -I../../../casablanca/Release/src/pch
   FORCE_INCLUDE +=
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -O2 -std=c++0x
   ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CFLAGS)
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-  LIBS += -lpthread
-  LDDEPS +=
+  LIBS += ../../../bin/linux/gmake/x64/Release/libpplx.a -lpthread -lboost_system -lboost_thread
+  LDDEPS += ../../../bin/linux/gmake/x64/Release/libpplx.a
   ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -s -m64
   LINKCMD = $(CXX) -o $(TARGET) $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
   define PREBUILDCMDS
@@ -118,8 +112,6 @@ ifeq ($(config),release_x64)
   define PRELINKCMDS
   endef
   define POSTBUILDCMDS
-	@echo Running postbuild commands
-	$(TARGET)
   endef
 all: $(TARGETDIR) $(OBJDIR) prebuild prelink $(TARGET)
 	@:
@@ -127,7 +119,7 @@ all: $(TARGETDIR) $(OBJDIR) prebuild prelink $(TARGET)
 endif
 
 OBJECTS := \
-	$(OBJDIR)/rxcpp_test.o \
+	$(OBJDIR)/ppl_example.o \
 
 RESOURCES := \
 
@@ -142,7 +134,7 @@ ifeq (/bin,$(findstring /bin,$(SHELL)))
 endif
 
 $(TARGET): $(GCH) $(OBJECTS) $(LDDEPS) $(RESOURCES) ${CUSTOMFILES}
-	@echo Linking rxcpp_test
+	@echo Linking ppl_example
 	$(SILENT) $(LINKCMD)
 	$(POSTBUILDCMDS)
 
@@ -163,7 +155,7 @@ else
 endif
 
 clean:
-	@echo Cleaning rxcpp_test
+	@echo Cleaning ppl_example
 ifeq (posix,$(SHELLTYPE))
 	$(SILENT) rm -f  $(TARGET)
 	$(SILENT) rm -rf $(OBJDIR)
@@ -185,7 +177,7 @@ $(GCH): $(PCH)
 	$(SILENT) $(CXX) -x c++-header $(ALL_CXXFLAGS) -o "$@" -MF "$(@:%.gch=%.d)" -c "$<"
 endif
 
-$(OBJDIR)/rxcpp_test.o: ../../../ticker/rxcpp_test.cpp
+$(OBJDIR)/ppl_example.o: ../../../ticker/ppl_example.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 

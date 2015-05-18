@@ -16,7 +16,6 @@ SCENARIO("showing off the test scheduler") {
         int count = 0;
 
         WHEN("subscribe to an observable sequence on the scheduler") {
-            auto coordination = rxcpp::identity_one_worker(sc);
             auto seq = rxcpp::observable<>::interval(
                 std::chrono::milliseconds(1),
                 test // on the test scheduler

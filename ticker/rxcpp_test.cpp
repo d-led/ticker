@@ -21,8 +21,6 @@ SCENARIO("showing off the test scheduler") {
                 test // on the test scheduler
             ).filter([](int i) { return i % 2; });
 
-            ;
-
             seq.subscribe([&count](int){
                 count++;
             });
